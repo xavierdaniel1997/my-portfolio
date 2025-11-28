@@ -15,7 +15,7 @@ const About = () => {
                 >
                     <h2 className="text-5xl md:text-7xl font-display font-bold mb-8">ABOUT ME</h2>
                     <p className="text-xl text-secondary leading-relaxed">
-                        I'm a passionate developer with a keen eye for design. I bridge the gap between engineering and aesthetics, creating software that not only works perfectly but feels amazing to use.
+                        I’m a full-stack developer who enjoys building applications that can grow with their users and ideas. I approach problems with structure and logic, focusing on long-term performance rather than quick fixes. I’m driven by curiosity and constantly learn by diving into new challenges head-first. For me, development is about understanding how things work, improving them, and creating solutions that last.
                     </p>
                 </motion.div>
 
@@ -26,7 +26,7 @@ const About = () => {
                     viewport={{ once: true }}
                     className="p-8 rounded-3xl bg-glass border border-white/10 backdrop-blur-md hover:bg-glass-hover transition-colors duration-500"
                 >
-                    <h3 className="text-2xl font-bold mb-4">Philosophy</h3>
+                    <h3 className="text-2xl font-bold mb-4">Stroy</h3>
                     <p className="text-secondary mb-6">
                         Minimalism is not about subtraction for the sake of subtraction. It is about subtraction for the sake of focus.
                     </p>

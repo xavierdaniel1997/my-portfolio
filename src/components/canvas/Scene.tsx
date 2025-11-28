@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import Lights from "./Lights";
 import Effects from "./Effects";
 import AnimatedShapes from "./AnimatedShapes";
+import { Particles } from "./Particles";
 
 const Scene = () => {
     return (
@@ -12,10 +13,11 @@ const Scene = () => {
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 50 }}
                 gl={{ antialias: false, alpha: true }}
-                dpr={[1, 1.5]} // Optimization for high DPI screens
+                dpr={[1, 1.5]}
             >
                 <Suspense fallback={null}>
                     <Lights />
+                    <Particles />
                     <AnimatedShapes />
                     <Effects />
                 </Suspense>

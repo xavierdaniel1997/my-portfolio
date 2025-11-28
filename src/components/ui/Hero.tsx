@@ -113,6 +113,20 @@ const Hero = () => {
                 }}
             />
 
+            {/* Hero Background SVG */}
+            <motion.div
+                className="absolute right-0 top-0 h-full w-1/2 pointer-events-none z-0 flex items-center justify-end opacity-20"
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 0.2, x: 0 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+            >
+                <img
+                    src="/hero-bg.svg"
+                    alt="Hero Background"
+                    className="h-[80%] w-auto object-contain"
+                />
+            </motion.div>
+
             <div
                 ref={containerRef}
                 className="max-w-5xl z-10 relative"
@@ -184,20 +198,12 @@ const Hero = () => {
 
                 {/* Animated Role Text */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
                     className="mt-6 h-12 flex items-center"
                 >
                     <motion.p
-                        key={currentRole}
-                        initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                        exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-                        transition={{ duration: 0.5 }}
                         className="text-2xl md:text-3xl font-medium bg-gradient-to-r from-white/80 to-white/60 bg-clip-text text-transparent"
                     >
-                        {roles[currentRole]}
+                        Full Stack Developer
                     </motion.p>
                 </motion.div>
 
