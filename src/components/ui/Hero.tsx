@@ -156,7 +156,7 @@ const Hero = () => {
                             whileHover={{ scale: 1.02 }}
                             transition={{ type: "spring", stiffness: 300 }}
                         >
-                            DANIEL XAVIER
+                            DANIEL <span className="text-gray-500">XAVIER</span>
                         </motion.span>
 
                         {/* Brighter gradient overlay that appears on hover */}
@@ -212,9 +212,9 @@ const Hero = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-                    className="mt-6 text-xl md:text-2xl text-secondary max-w-lg font-light leading-relaxed"
+                    className="mt-6 text-xl md:text-2xl text-secondary max-w-3xl font-light leading-relaxed"
                 >
-                    Building digital products, brands, and experiences that make a difference.
+                    Building digital products that hold strong under scale, shaped by logic, curiosity, and continuous improvement
                 </motion.p>
 
                 {/* Social Links with Enhanced Interactions */}
@@ -225,10 +225,10 @@ const Hero = () => {
                     className="mt-8 flex items-center gap-4"
                 >
                     {[
-                        { icon: FaGithub, href: "https://github.com/yourusername", label: "GitHub", color: "from-purple-500/20 to-blue-500/20" },
-                        { icon: FaLinkedin, href: "https://linkedin.com/in/yourusername", label: "LinkedIn", color: "from-blue-500/20 to-cyan-500/20" },
-                        { icon: FaXTwitter, href: "https://x.com/yourusername", label: "X", color: "from-gray-500/20 to-white/20" },
-                        { icon: HiMail, href: "mailto:your.email@example.com", label: "Email", color: "from-red-500/20 to-orange-500/20" },
+                        { icon: FaGithub, href: "https://github.com/xavierdaniel1997", label: "GitHub", color: "from-purple-500/20 to-blue-500/20" },
+                        { icon: FaLinkedin, href: "https://www.linkedin.com/in/danielxavieroffical", label: "LinkedIn", color: "from-blue-500/20 to-cyan-500/20" },
+                        { icon: FaXTwitter, href: "https://x.com/cx_daniel58507", label: "X", color: "from-gray-500/20 to-white/20" },
+                        { icon: HiMail, href: "https://mail.google.com/mail/?view=cm&fs=1&to=danielcx532@gmail.com", label: "Email", color: "from-red-500/20 to-orange-500/20" },
                     ].map((social, index) => (
                         <motion.a
                             key={social.label}
@@ -344,8 +344,8 @@ const Hero = () => {
 
                     {/* Secondary CTA */}
                     <motion.a
-                        href="/resume.pdf"
-                        download="Daniel_Xavier_Resume.pdf"
+                        href="/DANIEL_XAVIER.pdf"
+                        download="DANIEL_XAVIER.pdf"
                         whileHover={{ scale: 1.05, x: 5 }}
                         whileTap={{ scale: 0.95 }}
                         className="ml-4 inline-flex items-center gap-2 px-6 py-4 text-white/80 hover:text-white font-medium transition-all duration-300 group"

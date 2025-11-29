@@ -3,6 +3,8 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/layout/Providers";
 import Scene from "@/components/canvas/Scene";
+import Navbar from "@/components/ui/Navbar";
+import Loader from "@/components/ui/Loader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,8 +17,6 @@ const outfit = Outfit({
   variable: "--font-outfit",
   display: "swap",
 });
-
-import Navbar from "@/components/ui/Navbar";
 
 export const metadata: Metadata = {
   title: "Premium Developer Portfolio",
@@ -32,6 +32,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body className="antialiased bg-background text-foreground selection:bg-white selection:text-black">
         <Providers>
+          <Loader />
           <Scene />
           <Navbar />
           <main className="relative z-10">
