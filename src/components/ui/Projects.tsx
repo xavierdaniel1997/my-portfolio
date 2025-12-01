@@ -52,45 +52,47 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.6 }}
-            viewport={{ once: true }}
-            className="min-w-[350px] md:min-w-[450px] bg-glass border border-white/10 rounded-3xl overflow-hidden flex flex-col snap-center hover:bg-glass-hover transition-all duration-300 group"
+            viewport={{ once: true, margin: "-50px" }}
+            className="min-w-[280px] sm:min-w-[350px] md:min-w-[450px] bg-glass border border-white/10 rounded-3xl overflow-hidden flex flex-col snap-center hover:bg-glass-hover transition-all duration-300 group"
         >
             {/* Project Image */}
-            <div className="w-full h-64 bg-white/5 overflow-hidden relative">
+            <div className="w-full h-48 sm:h-56 md:h-64 bg-white/5 overflow-hidden relative">
                 <Image
                     src={project.image}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, 450px"
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    quality={85}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
             </div>
 
             {/* Content */}
-            <div className="p-8 flex flex-col flex-grow">
-                <div className="flex justify-between items-start mb-4">
+            <div className="p-4 sm:p-6 md:p-8 flex flex-col flex-grow">
+                <div className="flex justify-between items-start mb-3 md:mb-4">
                     <div>
-                        <h3 className="text-3xl font-bold mb-1">{project.title}</h3>
-                        <p className="text-sm text-secondary font-mono">{project.category}</p>
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">{project.title}</h3>
+                        <p className="text-xs sm:text-sm text-secondary font-mono">{project.category}</p>
                     </div>
-                    {/* {project.year && <span className="text-xs font-mono border border-white/20 px-2 py-1 rounded-full text-white/60">{project.year}</span>} */}
                 </div>
 
-                <p className="text-secondary/80 text-sm leading-relaxed mb-6 line-clamp-3">
+                <p className="text-secondary/80 text-xs sm:text-sm leading-relaxed mb-4 md:mb-6 line-clamp-3">
                     {project.description}
                 </p>
 
                 {/* Tech Stack */}
-                <div className="mb-4 mt-auto">
+                <div className="mb-3 md:mb-4 mt-auto">
                     <motion.div
-                        className="flex flex-wrap gap-2"
+                        className="flex flex-wrap gap-1.5 sm:gap-2"
                         initial={false}
                         animate={{ height: "auto" }}
                     >
                         {displayedTech.map((tech) => (
                             <motion.span
                                 key={tech}
-                                className="text-xs font-medium px-3 py-1 bg-white/5 rounded-full text-white/70 border border-white/5"
+                                className="text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1 bg-white/5 rounded-full text-white/70 border border-white/5"
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.2 }}
@@ -104,7 +106,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
                     {hasMoreTech && (
                         <motion.button
                             onClick={() => setShowAllTech(!showAllTech)}
-                            className="mt-3 flex items-center gap-1.5 text-xs text-white/60 hover:text-white transition-colors group/btn"
+                            className="mt-2 sm:mt-3 flex items-center gap-1.5 text-[10px] sm:text-xs text-white/60 hover:text-white transition-colors group/btn"
                             whileHover={{ x: 3 }}
                         >
                             <span>{showAllTech ? 'Show Less' : `Show ${project.tech.length - techLimit} More`}</span>
@@ -112,22 +114,22 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
                                 animate={{ rotate: showAllTech ? 180 : 0 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <FaChevronDown className="w-3 h-3" />
+                                <FaChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                             </motion.div>
                         </motion.button>
                     )}
                 </div>
 
                 {/* Links */}
-                <div className="flex items-center gap-4 pt-4 border-t border-white/10 mt-4 flex-wrap">
+                <div className="flex items-center gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-white/10 mt-3 sm:mt-4 flex-wrap">
                     {project.githubFrontend && (
                         <a
                             href={project.githubFrontend}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
+                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-white/80 hover:text-white transition-colors"
                         >
-                            <FaGithub className="text-lg" />
+                            <FaGithub className="text-base sm:text-lg" />
                             <span>Frontend</span>
                         </a>
                     )}
@@ -136,9 +138,9 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
                             href={project.githubBackend}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
+                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-white/80 hover:text-white transition-colors"
                         >
-                            <FaGithub className="text-lg" />
+                            <FaGithub className="text-base sm:text-lg" />
                             <span>Backend</span>
                         </a>
                     )}
@@ -146,10 +148,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white transition-colors ml-auto"
+                        className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-white/80 hover:text-white transition-colors sm:ml-auto"
                     >
                         <span>Live Demo</span>
-                        <FaExternalLinkAlt className="text-sm" />
+                        <FaExternalLinkAlt className="text-xs sm:text-sm" />
                     </a>}
                 </div>
             </div>
@@ -165,12 +167,15 @@ const Projects = () => {
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="text-5xl md:text-7xl font-display font-bold mb-16 px-4"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-8 sm:mb-12 md:mb-16 px-4"
                 >
                     PROJECTS
                 </motion.h2>
 
-                <div className="flex gap-8 overflow-x-auto pb-12 px-4 snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <div
+                    className="flex gap-4 sm:gap-6 md:gap-8 overflow-x-auto pb-8 sm:pb-10 md:pb-12 px-4 snap-x snap-mandatory touch-pan-x"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+                >
                     {projects.map((project, index) => (
                         <ProjectCard key={index} project={project} index={index} />
                     ))}
