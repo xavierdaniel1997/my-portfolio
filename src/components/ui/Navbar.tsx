@@ -253,7 +253,7 @@ const Navbar = () => {
                                 className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-black/50"
                             >
                                 <p className="text-xs text-white/40 text-center">
-                                    © 2024 Daniel Xavier<br />
+                                    © 2025 Daniel Xavier<br />
                                     <span className="text-white/30">Building digital excellence</span>
                                 </p>
                             </motion.div>
