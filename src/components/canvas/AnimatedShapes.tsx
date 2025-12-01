@@ -1,151 +1,14 @@
 import { useRef, useMemo, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, MeshTransmissionMaterial, RoundedBox, Sphere, Points, PointMaterial } from '@react-three/drei';
+import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 import { useStore } from '@/store/useStore';
-import { random } from 'maath';
 
-// Floating particles in the background
-const Particles = () => {
-    const ref = useRef<THREE.Points>(null);
-    const sphere = useMemo(() => random.inSphere(new Float32Array(5000), { radius: 10 }), []);
-
-    useFrame((state, delta) => {
-        if (ref.current) {
-            ref.current.rotation.x -= delta / 10;
-            ref.current.rotation.y -= delta / 15;
-        }
-    });
-
-    return (
-        <group rotation={[0, 0, Math.PI / 4]}>
-            <Points ref={ref} positions={sphere as Float32Array} stride={3} frustumCulled={false}>
-                <PointMaterial
-                    transparent
-                    color="#ffffff"
-                    size={0.02}
-                    sizeAttenuation={true}
-                    depthWrite={false}
-                    opacity={0.5}
-                />
-            </Points>
-        </group>
-    );
-};
-
-// Interactive Glass Sphere with distortion
-const GlassSphere = ({ position }: { position: [number, number, number] }) => {
-    const meshRef = useRef<THREE.Mesh>(null);
-    const [hovered, setHovered] = useState(false);
-    const { pointer } = useThree();
-
-    useFrame((state, delta) => {
-        if (meshRef.current) {
-            // Smooth rotation
-            meshRef.current.rotation.x += delta * 0.2;
-            meshRef.current.rotation.y += delta * 0.3;
-
-            // Follow mouse when hovered
-            if (hovered) {
-                meshRef.current.position.x = THREE.MathUtils.lerp(
-                    meshRef.current.position.x,
-                    position[0] + pointer.x * 0.5,
-                    0.05
-                );
-                meshRef.current.position.y = THREE.MathUtils.lerp(
-                    meshRef.current.position.y,
-                    position[1] + pointer.y * 0.5,
-                    0.05
-                );
-            } else {
-                meshRef.current.position.x = THREE.MathUtils.lerp(
-                    meshRef.current.position.x,
-                    position[0],
-                    0.05
-                );
-                meshRef.current.position.y = THREE.MathUtils.lerp(
-                    meshRef.current.position.y,
-                    position[1],
-                    0.05
-                );
-            }
-        }
-    });
-
-    return (
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-            <Sphere
-                ref={meshRef}
-                args={[1, 64, 64]}
-                position={position}
-                onPointerEnter={() => setHovered(true)}
-                onPointerLeave={() => setHovered(false)}
-            >
-                <MeshTransmissionMaterial
-                    backside
-                    samples={16}
-                    resolution={256}
-                    transmission={0.95}
-                    roughness={0.1}
-                    thickness={1}
-                    ior={1.5}
-                    chromaticAberration={0.5}
-                    anisotropy={1}
-                    distortion={hovered ? 0.5 : 0.2}
-                    distortionScale={0.5}
-                    temporalDistortion={0.2}
-                    color="#ffffff"
-                />
-            </Sphere>
-        </Float>
-    );
-};
-
-// Morphing Abstract Shape
-const MorphingShape = ({ position }: { position: [number, number, number] }) => {
-    const meshRef = useRef<THREE.Mesh>(null);
-    const [hovered, setHovered] = useState(false);
-    const { pointer } = useThree();
-
-    useFrame((state, delta) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.x += delta * 0.15;
-            meshRef.current.rotation.z += delta * 0.1;
-
-            // Scale on hover
-            const targetScale = hovered ? 1.3 : 1;
-            meshRef.current.scale.x = THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1);
-            meshRef.current.scale.y = THREE.MathUtils.lerp(meshRef.current.scale.y, targetScale, 0.1);
-            meshRef.current.scale.z = THREE.MathUtils.lerp(meshRef.current.scale.z, targetScale, 0.1);
-
-            // Subtle mouse follow
-            if (hovered) {
-                meshRef.current.rotation.y += pointer.x * delta;
-            }
-        }
-    });
-
-    return (
-        <Float speed={1.5} rotationIntensity={1} floatIntensity={1.5}>
-            <mesh
-                ref={meshRef}
-                position={position}
-                onPointerEnter={() => setHovered(true)}
-                onPointerLeave={() => setHovered(false)}
-            >
-                <icosahedronGeometry args={[1.2, 1]} />
-                <MeshDistortMaterial
-                    color={hovered ? "#ffffff" : "#888888"}
-                    attach="material"
-                    distort={hovered ? 0.6 : 0.3}
-                    speed={2}
-                    roughness={0.2}
-                    metalness={0.8}
-                />
-            </mesh>
-        </Float>
-    );
-};
+// Shared Geometries to reduce GPU memory and draw calls overhead
+const boxGeo = new THREE.BoxGeometry(1, 1, 1);
+const dodecaGeo = new THREE.DodecahedronGeometry(1, 0);
+const octaGeo = new THREE.OctahedronGeometry(1, 0);
+const tetraGeo = new THREE.TetrahedronGeometry(1, 0);
 
 // Snowflake Component with variations
 const Snowflake = ({ position, type = 'star', size = 1 }: { position: [number, number, number], type?: 'star' | 'crystal' | 'prism' | 'spike', size?: number }) => {
@@ -200,61 +63,52 @@ const Snowflake = ({ position, type = 'star', size = 1 }: { position: [number, n
         }
     });
 
-    const materialProps = {
+    const materialProps = useMemo(() => ({
         color: hovered ? "#ffffff" : "#e0f7fa",
         emissive: hovered ? "#ffffff" : "#a0e0e0",
         emissiveIntensity: hovered ? 0.8 : 0.3,
-        metalness: 0.5,
-        roughness: 0.1,
         transparent: true,
         opacity: 0.4,
-    };
+        depthWrite: false, // Optimization for transparent objects
+    }), [hovered]);
 
     return (
         <Float speed={2} rotationIntensity={1} floatIntensity={1}>
             <group ref={meshRef} position={position}>
                 {type === 'star' && (
                     <group>
-                        <mesh rotation={[0, 0, 0]}>
-                            <boxGeometry args={[0.1 * size, 1 * size, 0.1 * size]} />
-                            <meshStandardMaterial {...materialProps} />
+                        <mesh rotation={[0, 0, 0]} geometry={boxGeo} scale={[0.1 * size, 1 * size, 0.1 * size]}>
+                            <meshLambertMaterial {...materialProps} />
                         </mesh>
-                        <mesh rotation={[0, 0, Math.PI / 3]}>
-                            <boxGeometry args={[0.1 * size, 1 * size, 0.1 * size]} />
-                            <meshStandardMaterial {...materialProps} />
+                        <mesh rotation={[0, 0, Math.PI / 3]} geometry={boxGeo} scale={[0.1 * size, 1 * size, 0.1 * size]}>
+                            <meshLambertMaterial {...materialProps} />
                         </mesh>
-                        <mesh rotation={[0, 0, (Math.PI * 2) / 3]}>
-                            <boxGeometry args={[0.1 * size, 1 * size, 0.1 * size]} />
-                            <meshStandardMaterial {...materialProps} />
+                        <mesh rotation={[0, 0, (Math.PI * 2) / 3]} geometry={boxGeo} scale={[0.1 * size, 1 * size, 0.1 * size]}>
+                            <meshLambertMaterial {...materialProps} />
                         </mesh>
                         {/* Center detail */}
-                        <mesh>
-                            <dodecahedronGeometry args={[0.2 * size, 0]} />
-                            <meshStandardMaterial {...materialProps} />
+                        <mesh geometry={dodecaGeo} scale={[0.2 * size, 0.2 * size, 0.2 * size]}>
+                            <meshLambertMaterial {...materialProps} />
                         </mesh>
                     </group>
                 )}
                 {type === 'crystal' && (
-                    <mesh>
-                        <octahedronGeometry args={[0.6 * size, 0]} />
-                        <meshStandardMaterial {...materialProps} />
+                    <mesh geometry={octaGeo} scale={[0.6 * size, 0.6 * size, 0.6 * size]}>
+                        <meshLambertMaterial {...materialProps} />
                     </mesh>
                 )}
                 {type === 'prism' && (
-                    <mesh>
-                        <dodecahedronGeometry args={[0.5 * size, 0]} />
-                        <meshStandardMaterial {...materialProps} />
+                    <mesh geometry={dodecaGeo} scale={[0.5 * size, 0.5 * size, 0.5 * size]}>
+                        <meshLambertMaterial {...materialProps} />
                     </mesh>
                 )}
                 {type === 'spike' && (
                     <group>
-                        <mesh>
-                            <tetrahedronGeometry args={[0.6 * size, 0]} />
-                            <meshStandardMaterial {...materialProps} />
+                        <mesh geometry={tetraGeo} scale={[0.6 * size, 0.6 * size, 0.6 * size]}>
+                            <meshLambertMaterial {...materialProps} />
                         </mesh>
-                        <mesh rotation={[Math.PI, Math.PI / 4, 0]}>
-                            <tetrahedronGeometry args={[0.6 * size, 0]} />
-                            <meshStandardMaterial {...materialProps} />
+                        <mesh rotation={[Math.PI, Math.PI / 4, 0]} geometry={tetraGeo} scale={[0.6 * size, 0.6 * size, 0.6 * size]}>
+                            <meshLambertMaterial {...materialProps} />
                         </mesh>
                     </group>
                 )}

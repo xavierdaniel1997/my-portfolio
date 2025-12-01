@@ -59,7 +59,7 @@ const Hero = () => {
     }));
 
     return (
-        <Section id="hero" className="items-start overflow-hidden">
+        <Section id="hero" className="items-start overflow-hidden relative">
             {/* Animated Background Particles */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {particles.map((particle) => (
@@ -115,7 +115,7 @@ const Hero = () => {
 
             {/* Hero Background SVG */}
             <motion.div
-                className="absolute right-0 top-0 h-full w-1/2 pointer-events-none z-0 flex items-center justify-end opacity-20"
+                className="absolute right-0 top-1/2 -translate-y-1/2 h-full w-1/2 pointer-events-none z-0 flex items-center justify-center opacity-20"
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 0.2, x: 0 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
@@ -123,13 +123,13 @@ const Hero = () => {
                 <img
                     src="/hero-bg.svg"
                     alt="Hero Background"
-                    className="h-[80%] w-auto object-contain"
+                    className="h-[70%] w-auto object-contain mr-8"
                 />
             </motion.div>
 
             <div
                 ref={containerRef}
-                className="max-w-5xl z-10 relative"
+                className="max-w-5xl z-10 relative w-full px-4 md:px-8 lg:px-0"
                 onMouseMove={handleMouseMove}
             >
                 {/* Main Title with Magnetic Effect */}
