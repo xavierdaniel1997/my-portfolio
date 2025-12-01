@@ -49,29 +49,30 @@ const skillCategories = [
         skills: [
             { name: "AWS EC2", icon: Cloud, color: "#FF9900" },
             { name: "GCP", icon: SiGooglecloud, color: "#4285F4" },
+            { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
             { name: "Nginx", icon: SiNginx, color: "#009639" },
             { name: "Git", icon: SiGit, color: "#F05032" },
             { name: "GitHub", icon: SiGithub, color: "#ffffff" },
         ]
     },
-    {
-        title: "Architecture & CS",
-        skills: [
-            { name: "REST API", icon: Server, color: "#ffffff" },
-            { name: "MVC", icon: LayoutTemplate, color: "#ffffff" },
-            { name: "Clean Arch", icon: Layers, color: "#ffffff" },
-            { name: "SOLID", icon: Code2, color: "#ffffff" },
-            { name: "DSA", icon: Binary, color: "#ffffff" },
-        ]
-    },
-    {
-        title: "Tools",
-        skills: [
-            { name: "Postman", icon: SiPostman, color: "#FF6C37" },
-            { name: "Figma", icon: SiFigma, color: "#F24E1E" },
-            { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
-        ]
-    }
+    // {
+    //     title: "Architecture & CS",
+    //     skills: [
+    //         { name: "REST API", icon: Server, color: "#ffffff" },
+    //         { name: "MVC", icon: LayoutTemplate, color: "#ffffff" },
+    //         { name: "Clean Arch", icon: Layers, color: "#ffffff" },
+    //         { name: "SOLID", icon: Code2, color: "#ffffff" },
+    //         { name: "DSA", icon: Binary, color: "#ffffff" },
+    //     ]
+    // },
+    // {
+    //     title: "Tools",
+    //     skills: [
+    //         { name: "Postman", icon: SiPostman, color: "#FF6C37" },
+    //         { name: "Figma", icon: SiFigma, color: "#F24E1E" },
+    //         { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
+    //     ]
+    // }
 ];
 
 const Skills = () => {

@@ -19,8 +19,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Premium Developer Portfolio",
-  description: "A minimal, premium developer portfolio.",
+  title: "Daniel Xavier | Full Stack Developer",
+  description: "Full Stack Developer building scalable digital products with MERN stack and modern web technologies.",
 };
 
 export default function RootLayout({
