@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, PanInfo } from "framer-motion";
 import Image from "next/image";
 import Section from "./Section";
 import { useState } from "react";
@@ -39,7 +39,7 @@ const projects = [
     },
 ];
 
-import { FaGithub, FaExternalLinkAlt, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaChevronDown, FaChevronUp, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
     const [showAllTech, setShowAllTech] = useState(false);
@@ -160,6 +160,25 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
 };
 
 const Projects = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handlePrev = () => {
+        setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prev) => (prev + 1) % projects.length);
+    };
+
+    const handleDragEnd = (_: any, info: PanInfo) => {
+        const threshold = 50;
+        if (info.offset.x < -threshold) {
+            handleNext();
+        } else if (info.offset.x > threshold) {
+            handlePrev();
+        }
+    };
+
     return (
         <Section id="projects" className="items-center overflow-hidden py-20">
             <div className="w-full max-w-7xl">
@@ -172,8 +191,55 @@ const Projects = () => {
                     PROJECTS
                 </motion.h2>
 
+                {/* Mobile carousel */}
+                <div className="flex sm:hidden flex-col items-center px-4 pb-8">
+                    <motion.div
+                        key={currentIndex}
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.4 }}
+                        className="w-full flex justify-center"
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        onDragEnd={handleDragEnd}
+                    >
+                        <ProjectCard project={projects[currentIndex]} index={currentIndex} />
+                    </motion.div>
+
+                    <div className="mt-4 flex items-center justify-between w-full max-w-xs">
+                        <button
+                            onClick={handlePrev}
+                            className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors"
+                            aria-label="Previous project"
+                        >
+                            <FaChevronLeft className="w-4 h-4" />
+                        </button>
+
+                        <div className="flex items-center gap-2">
+                            {projects.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setCurrentIndex(idx)}
+                                    className={`h-2 w-2 rounded-full transition-all duration-200 ${idx === currentIndex ? "bg-white/90 w-4" : "bg-white/30"}`}
+                                    aria-label={`Go to project ${idx + 1}`}
+                                />
+                            ))}
+                        </div>
+
+                        <button
+                            onClick={handleNext}
+                            className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors"
+                            aria-label="Next project"
+                        >
+                            <FaChevronRight className="w-4 h-4" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Existing horizontal scroll for sm+ */}
                 <div
-                    className="flex gap-4 sm:gap-6 md:gap-8 overflow-x-auto pb-8 sm:pb-10 md:pb-12 px-4 snap-x snap-mandatory touch-pan-x"
+                    className="hidden sm:flex gap-4 sm:gap-6 md:gap-8 overflow-x-auto pb-8 sm:pb-10 md:pb-12 px-4 snap-x snap-mandatory touch-pan-x"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
                 >
                     {projects.map((project, index) => (
