@@ -6,21 +6,12 @@ import Section from "./Section";
 import { useState } from "react";
 
 const projects = [
-    {
-        title: "FootFlex",
-        category: "Full-Stack E-commerce Platform",
-        description: "Built a comprehensive e-commerce platform for seamless buying and selling of footwear. Features responsive UI with React and Material-UI, secure authentication with JWT and Google OAuth, Razorpay payment integration, and Cloudinary-powered image management.",
-        tech: ["React", "Redux Toolkit", "Material-UI", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Google OAuth", "Razorpay", "Cloudinary"],
-        image: "/footflex.png",
-        githubFrontend: "https://github.com/xavierdaniel1997/footflex-client",
-        githubBackend: "https://github.com/xavierdaniel1997/footflex-server",
-        live: "https://footflex-client-kappa.vercel.app/"
-    },
+
     {
         title: "TeamSync",
         category: "Agile Project Management Platform",
         description: "Built a comprehensive project management platform for Agile workflows featuring epics, user stories, backlogs, sprints, and real-time progress tracking. Integrated Socket.io and ZegoCloud for team chat and video calls, with live notifications and Stripe subscription management.",
-        tech: ["React", "TanStack Query", "Redux", "Tailwind CSS", "Material-UI", "Node.js", "Express.js", "MongoDB", "Socket.io", "ZegoCloud", "Google OAuth", "Stripe", "Cloudinary", "Nodemailer"],
+        tech: ["React js", "TanStack Query", "Redux", "Tailwind CSS", "Material-UI", "Node.js", "Express.js", "MongoDB", "Socket.io", "ZegoCloud", "Google OAuth", "Stripe", "Cloudinary", "Nodemailer"],
         image: "/teamsync.png",
         githubFrontend: "https://github.com/xavierdaniel1997/teamsync_frontend",
         githubBackend: "https://github.com/xavierdaniel1997/teamsync_backend",
@@ -30,12 +21,22 @@ const projects = [
         title: "MyBus",
         category: "Bus Booking App",
         description: "A mobile-first bus booking application simplifying travel. Users can search routes, select seats, book tickets, and track buses in real-time.",
-        tech: ["React Native", "Node.js", "MongoDB", "Google Maps"],
+        tech: ["Next js", "Zustand", "Tailwind CSS", "Node.js", "Express js", "MongoDB"],
         year: "2023",
         image: "/mybus.png",
         githubFrontend: "https://github.com/xavierdaniel1997/mybus-client",
         githubBackend: "https://github.com/xavierdaniel1997/mybus-server",
-        // live: "https://mybus.demo.com"
+        live: "https://www.mybus.buzz"
+    },
+    {
+        title: "FootFlex",
+        category: "Full-Stack E-commerce Platform",
+        description: "Built a comprehensive e-commerce platform for seamless buying and selling of footwear. Features responsive UI with React and Material-UI, secure authentication with JWT and Google OAuth, Razorpay payment integration, and Cloudinary-powered image management.",
+        tech: ["React", "Redux Toolkit", "Material-UI", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Google OAuth", "Razorpay", "Cloudinary"],
+        image: "/footflex.png",
+        githubFrontend: "https://github.com/xavierdaniel1997/footflex-client",
+        githubBackend: "https://github.com/xavierdaniel1997/footflex-server",
+        live: "https://footflex-client-kappa.vercel.app/"
     },
 ];
 
